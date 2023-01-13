@@ -1,21 +1,22 @@
 import pg from 'pg';
 
 async function createDB() {
+  const dbName = process.env.DB_NAME || 'blogthing';
   const client = new pg.Client({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_USER_PW
   })
-  
+
   // Connect and check if db exists. If not, create new.
   client.connect()
     .then(() => console.log('connected'))
     .catch(() => console.error('connection error'))
 
-  let testDB = await client.query("SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower('blogthing')");
+  let testDB = await client.query(`SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower('${dbName}')`);
   
   if (testDB.rows.length === 0) {
-    let result = await client.query('CREATE DATABASE blogthing')
+    let result = await client.query(`CREATE DATABASE ${dbName}`)
       .then((res) => res)
       .catch((e) => console.error(e));
     if (!result.rows) { 
@@ -32,7 +33,7 @@ async function createTables() {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_USER_PW,
-    database: process.env.DB_NAME ? process.env.DB_NAME : 'blogthing'
+    database: process.env.DB_NAME || 'blogthing'
   })
 
   const result = client.connect()
