@@ -55,6 +55,7 @@ async function createTables() {
   `)
     .then((res) => res)
     .catch((e) => console.error("Failed to create user table: ", e))
+  
   let createPostTable = await client.query(`
       CREATE TABLE IF NOT EXISTS post (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -100,6 +101,27 @@ async function createTables() {
     .then((res) => res)
     .catch((e) => console.error('Failed to create post category table: ', e))
 
+  const createTagTable = await client.query(`
+    CREATE TABLE IF NOT EXISTS tag (
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      title VARCHAR ( 75 ) NOT NULL,
+      meta_title VARCHAR ( 100 ) NULL DEFAULT NULL,
+      slug VARCHAR ( 100 ),
+      content TEXT 
+    )
+  `)
+    .then(res => res)
+    .catch((e) => console.error(e))
+
+  const createPostTagTable = await client.query(`
+    CREATE TABLE IF NOT EXISTS post_tag (
+      post_id INTEGER REFERENCES post(id) ON DELETE NO ACTION,
+      tag_id INTEGER REFERENCES tag(id) ON DELETE NO ACTION
+    )
+  `)
+    .then(res => res)
+    .catch((e) => console.error(e))
+
   client.end();
 }
 
@@ -110,6 +132,5 @@ async function setupDB() {
     createTables();
   }
 }
-
 
 export default setupDB;
