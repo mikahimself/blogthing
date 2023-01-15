@@ -19,13 +19,28 @@ export function GetStarted() {
       </Avatar>
       <Typography component="h1" variant="h5">Get started</Typography>
 
-      <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 2 }}>
+      <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
         <TextField
+          margin="normal"
           required
           fullWidth
-          id="server-address-field"
-          label="Server address"
+          id="database-address-field"
+          label="Database address"
           />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="database-user-field"
+          label="Database user"
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="database-user-password"
+          label="User password"
+        />
         <Button
           type="submit"
           fullWidth
