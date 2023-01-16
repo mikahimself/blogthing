@@ -3,8 +3,26 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import StorageIcon from '@mui/icons-material/Storage';
+import React from "react";
 
 export function GetStarted() {
+  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const data = new FormData(e.currentTarget);
+    const formData = {
+      database: data.get("database"),
+      user: data.get("user"),
+      password: data.get("password")
+    };
+    testConnection(formData)
+  }
+
+  const testConnection = async (data: any) => {
+    // Initial, very unsafe test
+    const result = await fetch(`http://localhost:3000/api/1/test?pw=${data.password}&user=${data.user}&db=${data.database}`)
+  }
+
   return (
     <Box
       sx={{
@@ -19,11 +37,12 @@ export function GetStarted() {
       </Avatar>
       <Typography component="h1" variant="h5">Get started</Typography>
 
-      <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
           fullWidth
+          name="database"
           id="database-address-field"
           label="Database address"
           />
@@ -31,6 +50,7 @@ export function GetStarted() {
           margin="normal"
           required
           fullWidth
+          name="user"
           id="database-user-field"
           label="Database user"
         />
@@ -38,6 +58,7 @@ export function GetStarted() {
           margin="normal"
           required
           fullWidth
+          name="password"
           id="database-user-password"
           label="User password"
         />
@@ -47,7 +68,7 @@ export function GetStarted() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
           >
-          Test connection
+          Connect
         </Button>
       </Box>
     </Box>
