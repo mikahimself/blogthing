@@ -19,8 +19,15 @@ export function GetStarted() {
   }
 
   const testConnection = async (data: any) => {
-    // Initial, very unsafe test
-    const result = await fetch(`http://localhost:3000/api/1/test?pw=${data.password}&user=${data.user}&db=${data.database}`)
+    const hash = btoa(`${data.user}:${data.password}`);
+    const response = await fetch("http://localhost:3000/api/1/test", {
+      method: 'post',
+      headers: {
+        "Authorization": `${hash}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"db": data.database})
+    })
   }
 
   return (
