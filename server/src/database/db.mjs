@@ -14,8 +14,8 @@ async function testConnection(host, user, password) {
     password
   });
   const response = await client.connect()
-    .then(() => true)
-    .catch((err) => err);
+    .then(() => { return { status: true }})
+    .catch((err) =>  { return { status: false, message: err }});
   client.end();
   return response;
 }

@@ -21,13 +21,15 @@ export function GetStarted() {
   const testConnection = async (data: any) => {
     const hash = btoa(`${data.user}:${data.password}`);
     const response = await fetch("http://localhost:3000/api/1/test", {
-      method: 'post',
+      method: 'POST',
       headers: {
         "Authorization": `${hash}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({"db": data.database})
     })
+    const responseJson = await response.json();
+    console.log(responseJson)
   }
 
   return (
