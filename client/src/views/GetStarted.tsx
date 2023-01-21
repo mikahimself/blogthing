@@ -6,7 +6,9 @@ import StorageIcon from '@mui/icons-material/Storage';
 import React from "react";
 
 export function GetStarted() {
-  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const [connectionNok, setConnectionNok] = React.useState(true);
+  const buttonDisabled = connectionNok;
+  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
@@ -15,7 +17,8 @@ export function GetStarted() {
       user: data.get("user"),
       password: data.get("password")
     };
-    testConnection(formData)
+    const result = testConnection(formData)
+
   }
 
   const testConnection = async (data: any) => {
@@ -30,6 +33,8 @@ export function GetStarted() {
     })
     const responseJson = await response.json();
     console.log(responseJson)
+    const result = responseJson.status === "Success"
+    setConnectionNok(!result);
   }
 
   return (
@@ -77,7 +82,16 @@ export function GetStarted() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
           >
-          Connect
+          Test Connection
+        </Button>
+        <Button
+          type="submit"
+          fullWidth
+          disabled={buttonDisabled}
+          variant="contained"
+          sx={{ mt: 3, mb: 2}}
+        >
+          Next
         </Button>
       </Box>
     </Box>
