@@ -6,35 +6,36 @@ import StorageIcon from '@mui/icons-material/Storage';
 import React from "react";
 
 export function GetStarted() {
-  const [connectionNok, setConnectionNok] = React.useState(true);
-  const buttonDisabled = connectionNok;
+  const [connectionOk, setConnectionOk] = React.useState(false);
+  const [database, setDatabase] = React.useState("")
+  const [username, setUsername] = React.useState("")
+  const [password, setPassword] = React.useState("")
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const data = new FormData(e.currentTarget);
     const formData = {
-      database: data.get("database"),
-      user: data.get("user"),
-      password: data.get("password")
+      database,
+      username,
+      password
     };
-    const result = testConnection(formData)
-
+    const result = testConnection()
   }
+  const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
 
-  const testConnection = async (data: any) => {
-    const hash = btoa(`${data.user}:${data.password}`);
+  const testConnection = async () => {
+    const hash = btoa(`${username}:${password}`);
     const response = await fetch("http://localhost:3000/api/1/test", {
       method: 'POST',
       headers: {
         "Authorization": `${hash}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"db": data.database})
+      body: JSON.stringify({"db": database})
     })
     const responseJson = await response.json();
     console.log(responseJson)
     const result = responseJson.status === "Success"
-    setConnectionNok(!result);
+    setConnectionOk(result);
   }
 
   return (
@@ -56,6 +57,7 @@ export function GetStarted() {
           margin="normal"
           required
           fullWidth
+          onChange={e => setDatabase(e.target.value)}
           name="database"
           id="database-address-field"
           label="Database address"
@@ -64,6 +66,7 @@ export function GetStarted() {
           margin="normal"
           required
           fullWidth
+          onChange={e => setUsername(e.target.value)}
           name="user"
           id="database-user-field"
           label="Database user"
@@ -72,11 +75,13 @@ export function GetStarted() {
           margin="normal"
           required
           fullWidth
+          onChange={e => setPassword(e.target.value)}
           name="password"
           id="database-user-password"
           label="User password"
         />
         <Button
+          disabled={!fieldsOk()}
           type="submit"
           fullWidth
           variant="contained"
@@ -87,7 +92,7 @@ export function GetStarted() {
         <Button
           type="submit"
           fullWidth
-          disabled={buttonDisabled}
+          disabled={!connectionOk}
           variant="contained"
           sx={{ mt: 3, mb: 2}}
         >
