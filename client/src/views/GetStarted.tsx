@@ -12,13 +12,7 @@ export function GetStarted() {
   const [password, setPassword] = React.useState("")
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const formData = {
-      database,
-      username,
-      password
-    };
-    const result = testConnection()
+    testConnection()
   }
   const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
 
@@ -74,6 +68,7 @@ export function GetStarted() {
         <TextField
           margin="normal"
           required
+          type="password"
           fullWidth
           onChange={e => setPassword(e.target.value)}
           name="password"
