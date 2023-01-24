@@ -7,7 +7,7 @@ const pool = new pg.Pool({
   database: process.env.DB_NAME ? process.env.DB_NAME : 'blogthing'
 })
 
-async function testConnection(host, user, password) {
+async function testDbConnection(host, user, password) {
   const client = new pg.Client({
     host,
     user,
@@ -20,4 +20,4 @@ async function testConnection(host, user, password) {
   return response;
 }
 
-export { testConnection }
+export { testDbConnection }
