@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import StorageIcon from '@mui/icons-material/Storage';
+import { CreateAdmin } from "./CreateAdmin";
 import React from "react";
 
 export function GetStarted() {
@@ -74,6 +75,12 @@ export function GetStarted() {
           name="password"
           id="database-user-password"
           label="User password"
+          inputProps={{
+            autocomplete: 'new-password',
+            form: {
+              autocomplete: 'off',
+            },
+          }}
         />
         <Button
           disabled={!fieldsOk()}
@@ -94,6 +101,9 @@ export function GetStarted() {
           Next
         </Button>
       </Box>
+
+      <CreateAdmin/>
+      
     </Box>
   )
 }
