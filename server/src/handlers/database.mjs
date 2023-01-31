@@ -17,3 +17,9 @@ export const testConnection = async (req, res) => {
     res.json({ status: "Failure", message: response.message })
   }
 };
+
+export const setupDatabase = async (req, res) => {
+  const adminCreds = atob(req.headers.authorization);
+  const [user, password] = adminCreds.split(":");
+  res.json({ message: `Got this: ${user}:${password}`});
+}

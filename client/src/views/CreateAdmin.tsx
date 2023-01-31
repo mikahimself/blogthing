@@ -7,12 +7,21 @@ export function CreateAdmin() {
   const [username, setUsername] = React.useState("admin");
   const [password, setPassword] = React.useState<string | null>(null);
 
-  const onSubmitForm = () => {
-
+  const onSubmitPW = async (e: any) => {
+    e.preventDefault();
+    const hash = window.btoa(`${username}:${password}`);
+    const response = await fetch("http://localhost:3000/api/1/setup", {
+      method: "POST",
+      headers: {
+        "Authorization": `${hash}`,
+      }
+    });
+    const responseJson = await response.json();
+    console.log(responseJson)
   }
 
   return (
-    <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
+    <Box component="form" onSubmit={onSubmitPW} noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -32,9 +41,9 @@ export function CreateAdmin() {
           name="password"
           id="admin-user-password"
           inputProps={{
-            autocomplete: 'new-password',
+            autoComplete: 'new-password',
             form: {
-              autocomplete: 'off',
+              autoComplete: 'off',
             },
           }}
           label="Password"

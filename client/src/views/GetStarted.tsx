@@ -18,7 +18,7 @@ export function GetStarted() {
   const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
 
   const testConnection = async () => {
-    const hash = btoa(`${username}:${password}`);
+    const hash = window.btoa(`${username}:${password}`);
     const response = await fetch("http://localhost:3000/api/1/test", {
       method: 'POST',
       headers: {
@@ -76,9 +76,9 @@ export function GetStarted() {
           id="database-user-password"
           label="User password"
           inputProps={{
-            autocomplete: 'new-password',
+            autoComplete: 'new-password',
             form: {
-              autocomplete: 'off',
+              autoComplete: 'off',
             },
           }}
         />
