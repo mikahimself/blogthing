@@ -1,12 +1,9 @@
-import { Avatar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import StorageIcon from '@mui/icons-material/Storage';
-import { CreateAdmin } from "./CreateAdmin";
 import React from "react";
 
-export function GetStarted() {
+export default function TestConnection() {
   const [connectionOk, setConnectionOk] = React.useState(false);
   const [database, setDatabase] = React.useState("")
   const [username, setUsername] = React.useState("")
@@ -15,7 +12,6 @@ export function GetStarted() {
     e.preventDefault();
     testConnection()
   }
-  const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
 
   const testConnection = async () => {
     const hash = window.btoa(`${username}:${password}`);
@@ -33,21 +29,9 @@ export function GetStarted() {
     setConnectionOk(result);
   }
 
+  const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <StorageIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">Get started</Typography>
-
-      <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
+    <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -101,9 +85,5 @@ export function GetStarted() {
           Next
         </Button>
       </Box>
-
-      <CreateAdmin/>
-      
-    </Box>
   )
 }
