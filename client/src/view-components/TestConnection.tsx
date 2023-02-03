@@ -75,15 +75,6 @@ export default function TestConnection() {
           >
           Test Connection
         </Button>
-        <Button
-          type="submit"
-          fullWidth
-          disabled={!connectionOk}
-          variant="contained"
-          sx={{ mt: 3, mb: 2}}
-        >
-          Next
-        </Button>
       </Box>
   )
 }
