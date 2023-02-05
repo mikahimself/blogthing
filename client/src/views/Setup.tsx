@@ -7,21 +7,34 @@ import TestConnection from "../view-components/TestConnection";
 
 const steps = ["Setup Database Connection", "Setup Admin Account", "Profit"]
 
-const renderStepContent = (step: number) => {
-  switch (step) {
-    case 0:
-      return <TestConnection />
-    case 1:
-      return <CreateAdmin />
-  }
-}
-
 export function Setup() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [connectionOk, setConnectionOk] = React.useState(false);
+  const [credsOk, setCredsOk] = React.useState(false);
+
+  const renderStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return <TestConnection setConnectionOk={setConnectionOk}/>
+      case 1:
+        return <CreateAdmin setCredsOk={setCredsOk}/>
+    }
+  }
 
   const handleNextClick = (e: any) => {
-    const step = activeStep === steps.length ? 0 : activeStep + 1;
+    const step = activeStep + 1 === steps.length ? 0 : activeStep + 1;
     setActiveStep(step);
+  }
+
+  const isNextDisabled = () => {
+    switch (activeStep) {
+      case 0:
+        return !connectionOk;
+      case 1:
+        return !credsOk;
+      default:
+        return true;
+    }
   }
 
   return (
@@ -52,19 +65,13 @@ export function Setup() {
       { renderStepContent(activeStep) }
       <Button
         onClick={handleNextClick}
-        // type="submit"
+        disabled={isNextDisabled()}
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2}}
       >
-        Next
+        { activeStep + 1 === steps.length ? "Finish" : "Next "}
       </Button>
     </>
   )
-
-
-
-
-
-
 }

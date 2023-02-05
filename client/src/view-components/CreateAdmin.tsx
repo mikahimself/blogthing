@@ -3,9 +3,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React from "react";
 
-export function CreateAdmin() {
+export function CreateAdmin(props:any) {
   const [username, setUsername] = React.useState("admin");
-  const [password, setPassword] = React.useState<string | null>(null);
+  const [password, setPassword] = React.useState<string>("");
+
+  const onChangeFields = (e: any) => {
+    props.setCredsOk(username.length > 0 && password.length > 0)
+  }
 
   const onSubmitPW = async (e: any) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ export function CreateAdmin() {
           margin="normal"
           required
           fullWidth
-          onChange={e => setUsername(e.target.value)}
+          onChange={e => {setUsername(e.target.value); onChangeFields(e)}}
           name="user"
           id="admin-user-field"
           label="Admin username"
@@ -37,7 +41,7 @@ export function CreateAdmin() {
           required
           type="password"
           fullWidth
-          onChange={e => setPassword(e.target.value)}
+          onChange={e => {setPassword(e.target.value); onChangeFields(e)}}
           name="password"
           id="admin-user-password"
           inputProps={{

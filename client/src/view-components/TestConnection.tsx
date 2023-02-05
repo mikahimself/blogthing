@@ -3,8 +3,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React from "react";
 
-export default function TestConnection() {
-  const [connectionOk, setConnectionOk] = React.useState(false);
+export default function TestConnection(props: any) {
   const [database, setDatabase] = React.useState("")
   const [username, setUsername] = React.useState("")
   const [password, setPassword] = React.useState("")
@@ -26,7 +25,7 @@ export default function TestConnection() {
     const responseJson = await response.json();
     console.log(responseJson)
     const result = responseJson.status === "Success"
-    setConnectionOk(result);
+    props.setConnectionOk(result);
   }
 
   const fieldsOk = () => { return (database.length > 0 && username.length > 0 && password.length > 0) };
