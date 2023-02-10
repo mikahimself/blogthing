@@ -4,8 +4,8 @@ import TextField from "@mui/material/TextField";
 import React from "react";
 
 export default function TestConnection(props: any) {
-  const [database, setDatabase] = React.useState("")
-  const [username, setUsername] = React.useState("")
+  const [database, setDatabase] = React.useState("localhost")
+  const [username, setUsername] = React.useState("postgres")
   const [password, setPassword] = React.useState("")
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,8 +37,10 @@ export default function TestConnection(props: any) {
           fullWidth
           onChange={e => setDatabase(e.target.value)}
           name="database"
+          type="url"
           id="database-address-field"
           label="Database address"
+          value={database}
           />
         <TextField
           margin="normal"
@@ -48,6 +50,7 @@ export default function TestConnection(props: any) {
           name="user"
           id="database-user-field"
           label="Database user"
+          value={username}
         />
         <TextField
           margin="normal"
