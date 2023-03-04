@@ -19,7 +19,7 @@ export function CreateAdmin(props:any) {
   const onSubmitPW = async (e: any) => {
     e.preventDefault();
     const hash = window.btoa(`${username}:${password}`);
-    const response = await fetch("http://localhost:3000/api/1/setup", {
+    const response = await fetch("/api/1/setup", {
       method: "POST",
       headers: {
         "Authorization": `${hash}`,

@@ -14,7 +14,7 @@ export default function TestConnection(props: any) {
 
   const testConnection = async () => {
     const hash = window.btoa(`${username}:${password}`);
-    const response = await fetch("http://localhost:3000/api/1/test", {
+    const response = await fetch("/api/1/test", {
       method: 'POST',
       headers: {
         "Authorization": `${hash}`,
