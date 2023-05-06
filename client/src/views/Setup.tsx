@@ -26,6 +26,11 @@ export function Setup() {
     setActiveStep(step);
   }
 
+  const handleBackClick = () => {
+    const step = activeStep - 1;
+    setActiveStep(step)
+  }
+
   const isNextDisabled = () => {
     switch (activeStep) {
       case 0:
@@ -63,15 +68,24 @@ export function Setup() {
 
       </Stepper>
       { renderStepContent(activeStep) }
-      <Button
-        onClick={handleNextClick}
-        disabled={isNextDisabled()}
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2}}
-      >
-        { activeStep + 1 === steps.length ? "Finish" : "Next "}
-      </Button>
+      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Button
+          onClick={handleBackClick}
+          sx={{ mr: 1}}
+          >Back
+        </Button>
+        <Box>
+
+          <Button
+            onClick={handleNextClick}
+            disabled={isNextDisabled()}
+            variant="contained"
+            >
+            { activeStep + 1 === steps.length ? "Finish" : "Next "}
+          </Button>
+        </Box>
+
+      </Box>
     </>
   )
 }

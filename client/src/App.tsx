@@ -9,7 +9,7 @@ const theme = createTheme();
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <SetupLayout>
           <Setup />
